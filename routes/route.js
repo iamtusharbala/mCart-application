@@ -71,7 +71,6 @@ router.get('/tablets', async (req, res) => {
 //Get Mobiles Only
 router.get('/mobiles', async (req, res) => {
     try {
-
         const data = await Product.find({ productCode: "MOB-120" })
         if (data.length > 0) {
             res.send(data)
@@ -145,6 +144,18 @@ router.put('/carts/:username', async (req, res) => {
     }
 })
 
+router.delete('/products/:productId', async (req, res) => {
+    try {
+        const data = await Product.findOneAndDelete({ productId: req.params.productId })
+        if (data) {
+            res.send({ "message": "Product removed successfully" })
+        } else {
+            res.send({ "message": "Product not available" })
+        }
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 //Invalid route
 router.all('*', (req, res) => {

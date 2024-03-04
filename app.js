@@ -10,6 +10,8 @@ dotenv.config({ path: './config.env' })
 //Connect to MongoDB database
 connection()
 
+app.use(express.json())
+
 app.use('/api/v1', router)
 
 app.get('/', (req, res) => {

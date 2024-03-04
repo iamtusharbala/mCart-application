@@ -9,7 +9,8 @@ const cartSchema = new Schema({
         type: String,
         default: "Open"
     }
-})
+}, { timestamps: true }
+)
 
 const Cart = mongoose.model('Cart', cartSchema)
 module.exports = Cart

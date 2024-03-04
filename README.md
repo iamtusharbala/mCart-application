@@ -14,4 +14,5 @@ mCart is a user-friendly online shopping application specialized in offering a w
 - Checkout Process: Users can proceed through the checkout process to finalize their orders.
 - Product Removal: Users can delete items from their cart if needed.
 
-The application architecture for mCart involves a backend system with distinct layers for services and database management.
+
+Additionally, the project utilizes RESTful APIs to facilitate communication between the front-end interface and the backend services. This architecture ensures efficient and standardized data exchange, allowing seamless interaction between different components of the mCart online shopping application.

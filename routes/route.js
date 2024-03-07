@@ -4,10 +4,15 @@ const router = express.Router()
 const User = require('../models/user')
 const Product = require('../models/product')
 const Cart = require('../models/cart')
+const Order = require('../models/order')
 
 
 function generateId(id) {
     return 100 + id
+}
+
+function generateOrderId(id) {
+    return 2000 + id
 }
 
 //Login 
@@ -152,6 +157,30 @@ router.delete('/products/:productId', async (req, res) => {
         } else {
             res.send({ "message": "Product not available" })
         }
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+//Place order
+router.post('/orders/:username', async (req, res) => {
+    try {
+        const orderLength = await Order.find()
+        const username = req.params.username;
+        const getUser = await Cart.findOne({ username: username })
+        const orderId = orderLength ? generateOrderId(orderLength.length) : 2000
+        if (getUser.statusOfCart === 'Open') {
+            await Cart.findByIdAndUpdate({ _id: getUser._id }, { statusOfCart: "Closed" })
+            const newOrder = new Order({
+                orderId: orderId,
+                cartId: getUser.cartId
+            })
+            await newOrder.save()
+            res.send({ "message": `New order placed with the ID : ${orderId}` })
+        } else {
+            res.send({ "message": "Cannot place order" })
+        }
+
     } catch (error) {
         console.log(error);
     }
